@@ -1,0 +1,27 @@
+<html>
+<head>
+  <title>Signup</title>
+</head>
+<body>
+  <h2>Signup</h2>
+  <form action="verify.html" onsubmit="return validateSignup()">
+    <input type="email" id="signupEmail" placeholder="Email"><br>
+    <input type="password" id="signupPass" placeholder="Password"><br>
+    <input type="password" id="signupConfirm" placeholder="Confirm Password"><br>
+    <button type="submit">Signup</button>
+  </form>
+
+  <script>
+    function validateSignup() {
+      const email = document.getElementById('signupEmail').value;
+      const pass = document.getElementById('signupPass').value;
+      const confirm = document.getElementById('signupConfirm').value;
+      if (!email.includes('@')) { alert("Invalid email"); return false; }
+      if (pass.length < 6) { alert("Password too short"); return false; }
+      if (pass !== confirm) { alert("Passwords don't match"); return false; }
+      alert("Signup successful! Check your email.");
+      return true;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<html>
+<head>
+  <title>Verify Email</title>
+</head>
+<body>
+  <h2>Email Verification</h2>
+  <form action="login.html" onsubmit="return verifyCode()">
+    <input type="text" id="code" placeholder="Verification Code"><br>
+    <button type="submit">Verify</button>
+  </form>
+
+  <script>
+    function verifyCode() {
+      const code = document.getElementById('code').value;
+      if (code === "") { alert("Enter code"); return false; }
+      alert("Email verified!");
+      return true;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<html>
+<head>
+  <title>Reset Password</title>
+</head>
+<body>
+  <h2>Reset Password</h2>
+  <form action="login.html" onsubmit="return resetPassword()">
+    <input type="password" id="newPass" placeholder="New Password"><br>
+    <input type="password" id="confirmPass" placeholder="Confirm Password"><br>
+    <button type="submit">Reset</button> <!-- This is the reset button -->
+  </form>
+
+  <script>
+    function resetPassword() {
+      const pass = document.getElementById('newPass').value;
+      const confirm = document.getElementById('confirmPass').value;
+      if (pass.length < 6) { alert("Password too short"); return false; }
+      if (pass !== confirm) { alert("Passwords do not match"); return false; }
+      alert("Password reset successfully!");
+      return true;
+    }
+  </script>
+</body>
+</html>

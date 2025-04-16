@@ -1,0 +1,21 @@
+<html>
+<head>
+  <title>Forgot Password</title>
+</head>
+<body>
+  <h2>Forgot Password</h2>
+  <form action="reset.html" onsubmit="return sendReset()">
+    <input type="email" id="forgotEmail" placeholder="Enter your email"><br>
+    <button type="submit">Send Reset Link</button>
+  </form>
+
+  <script>
+    function sendReset() {
+      const email = document.getElementById('forgotEmail').value;
+      if (!email.includes('@')) { alert("Invalid email"); return false; }
+      alert("Reset link sent!");
+      return true;
+    }
+  </script>
+</body>
+</html>
