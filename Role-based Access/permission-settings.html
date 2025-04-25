@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Permission Settings</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>Permission Settings</h1>
+
+  <div class="container">
+    <p>Select a role to see allowed features:</p>
+    <select id="viewRole" onchange="showPermissions()">
+      <option value="">-- Select Role --</option>
+      <option value="Admin">Admin</option>
+      <option value="Editor">Editor</option>
+      <option value="User">User</option>
+    </select>
+
+    <ul id="permissionList"></ul>
+  </div>
+
+  <a href="role-assignment.html">Go to Role Assignment</a>
+
+  <script src="permission-settings.js"></script>
+</body>
+</html>

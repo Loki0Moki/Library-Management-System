@@ -77,13 +77,22 @@
 
   <script>
     function loginUser() {
-      const email = document.getElementById('loginEmail').value;
-      const pass = document.getElementById('loginPass').value;
-      if (!email.includes('@')) { alert("Invalid email"); return false; }
-      if (pass.length < 6) { alert("Invalid password"); return false; }
-      alert("Login successful!");
-      return true;
+        const email = document.getElementById('loginEmail').value;
+        const pass = document.getElementById('loginPass').value;
+        if (!email.includes('@')) { 
+            alert("Invalid email"); 
+            return false; 
+        }
+        if (pass.length < 6) { 
+            alert("Invalid password"); 
+            return false; 
+        }
+        // Store user data in localStorage
+        localStorage.setItem('userEmail', email);
+        localStorage.setItem('userName', 'John Doe'); // Example name, replace with actual logic if needed
+        alert("Login successful!");
+        return true;
     }
-  </script>
+</script>
 </body>
 </html>
