@@ -14,10 +14,56 @@
 
   <script>
     function saveProfile() {
-      const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
-      alert(`Profile saved:\nName: ${name}\nEmail: ${email}`);
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+
+      
+      if (name === '') {
+        alert("Error: Name cannot be empty. Please enter your full name.");
+        document.getElementById('name').style.borderColor = 'red';
+        return;
+      } else {
+        document.getElementById('name').style.borderColor = '#ccc';
+      }
+
+      
+      if (!email.includes('@') || !email.includes('.')) {
+        alert("Error: Invalid email address. Please enter a valid email.");
+        document.getElementById('email').style.borderColor = 'red';
+        return;
+      } else {
+        document.getElementById('email').style.borderColor = '#ccc';
+      }
+
+      
+      alert(`Success: Profile updated successfully!\nName: ${name}\nEmail: ${email}`);
     }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const nameInput = document.getElementById('name');
+      const emailInput = document.getElementById('email');
+
+      
+      nameInput.value = 'John Doe';
+      emailInput.value = 'john.doe@example.com';
+
+      
+      nameInput.addEventListener('input', () => {
+        if (nameInput.value.trim() === '') {
+          nameInput.style.borderColor = 'red';
+        } else {
+          nameInput.style.borderColor = '#ccc';
+        }
+      });
+
+      emailInput.addEventListener('input', () => {
+        if (!emailInput.value.includes('@') || !emailInput.value.includes('.')) {
+          emailInput.style.borderColor = 'red';
+        } else {
+          emailInput.style.borderColor = '#ccc';
+        }
+      });
+    });
   </script>
 </body>
 </html>
@@ -57,7 +103,7 @@
     }
 
     button {
-        background-color: #007bff; /* Changed to blue */
+        background-color: #007bff; 
         color: white;
         padding: 10px 15px;
         border: none;
@@ -66,34 +112,6 @@
     }
 
     button:hover {
-        background-color: #0056b3; /* Darker blue for hover */
+        background-color: #0056b3; 
     }
 </style>
-
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const nameInput = document.getElementById('name');
-        const emailInput = document.getElementById('email');
-
-        // Pre-fill form with example data
-        nameInput.value = 'John Doe';
-        emailInput.value = 'john.doe@example.com';
-
-        // Add event listener for input validation
-        nameInput.addEventListener('input', () => {
-            if (nameInput.value.trim() === '') {
-                nameInput.style.borderColor = 'red';
-            } else {
-                nameInput.style.borderColor = '#ccc';
-            }
-        });
-
-        emailInput.addEventListener('input', () => {
-            if (!emailInput.value.includes('@')) {
-                emailInput.style.borderColor = 'red';
-            } else {
-                emailInput.style.borderColor = '#ccc';
-            }
-        });
-    });
-</script>

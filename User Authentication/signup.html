@@ -1,5 +1,8 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Signup</title>
   <style>
     body {
@@ -63,13 +66,58 @@
 
   <script>
     function validateSignup() {
-      const email = document.getElementById('signupEmail').value;
-      const pass = document.getElementById('signupPass').value;
-      const confirm = document.getElementById('signupConfirm').value;
-      if (!email.includes('@')) { alert("Invalid email"); return false; }
-      if (pass.length < 6) { alert("Password too short"); return false; }
-      if (pass !== confirm) { alert("Passwords don't match"); return false; }
-      alert("Signup successful! Check your email.");
+      const emailInput = document.getElementById('signupEmail');
+      const passInput = document.getElementById('signupPass');
+      const confirmInput = document.getElementById('signupConfirm');
+
+      const email = emailInput.value.trim();
+      const pass = passInput.value.trim();
+      const confirm = confirmInput.value.trim();
+
+      
+      if (email === '') {
+        alert("Error: Email field cannot be empty. Please enter your email.");
+        emailInput.style.borderColor = 'red';
+        return false;
+      }
+      if (!email.includes('@') || !email.includes('.')) {
+        alert("Error: Invalid email address. Please enter a valid email.");
+        emailInput.style.borderColor = 'red';
+        return false;
+      } else {
+        emailInput.style.borderColor = '#ccc';
+      }
+
+      
+      if (pass === '') {
+        alert("Error: Password field cannot be empty. Please enter a password.");
+        passInput.style.borderColor = 'red';
+        return false;
+      }
+      if (pass.length < 6) {
+        alert("Error: Password must be at least 6 characters long.");
+        passInput.style.borderColor = 'red';
+        return false;
+      } else {
+        passInput.style.borderColor = '#ccc';
+      }
+
+      
+      if (confirm === '') {
+        alert("Error: Confirm password field cannot be empty. Please re-enter your password.");
+        confirmInput.style.borderColor = 'red';
+        return false;
+      }
+      if (pass !== confirm) {
+        alert("Error: Passwords do not match. Please try again.");
+        confirmInput.style.borderColor = 'red';
+        return false;
+      } else {
+        confirmInput.style.borderColor = '#ccc';
+      }
+
+      
+      alert("Success: Signup successful! Check your email for verification.");
       return true;
     }
   </script>
