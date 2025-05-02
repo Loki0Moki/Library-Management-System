@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Custom Filter Builder</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+      background-color: #fafafa;
+    }
+    h1 {
+      color: #8e44ad;
+    }
+    .filter-form {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    label, input, select, button {
+      display: block;
+      width: 100%;
+      margin-top: 10px;
+    }
+    button {
+      background-color: #9b59b6;
+      color: white;
+      border: none;
+      padding: 10px;
+      margin-top: 15px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #7d3c98;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Custom Filter Builder</h1>
+
+<div class="filter-form">
+  <label for="materialType">Material Type:</label>
+  <select id="materialType">
+    <option value="">Select material</option>
+    <option value="Books">Books</option>
+    <option value="Magazines">Magazines</option>
+    <option value="DVDs">DVDs</option>
+  </select>
+
+  <label for="startDate">Start Date:</label>
+  <input type="date" id="startDate">
+
+  <label for="endDate">End Date:</label>
+  <input type="date" id="endDate">
+
+  <button onclick="buildFilter()">Apply Filter</button>
+</div>
+
+<script>
+  function buildFilter() {
+    const type = document.getElementById('materialType').value;
+    const start = document.getElementById('startDate').value;
+    const end = document.getElementById('endDate').value;
+
+    if (type && start && end) {
+      alert(`Filtering ${type} between ${start} and ${end}`);
+    } else {
+      alert("Please complete all filter options.");
+    }
+  }
+</script>
+
+</body>
+</html>

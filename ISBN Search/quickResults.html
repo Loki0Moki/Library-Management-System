@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quick ISBN Results</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+      background-color: #fef9e7;
+    }
+    h1 {
+      color: #b7950b;
+    }
+    .results {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+    .book-info {
+      margin-bottom: 20px;
+    }
+    button {
+      background-color: #f1c40f;
+      color: #333;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #d4ac0d;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Quick Results</h1>
+
+<div class="results" id="resultsContainer">
+  
+</div>
+
+<script>
+  function getISBNParam() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('isbn');
+  }
+
+  function displayResults(isbn) {
+    const container = document.getElementById('resultsContainer');
+    if (isbn) {
+      container.innerHTML = `
+        <div class="book-info">
+          <h2>Book Found!</h2>
+          <p><strong>ISBN:</strong> ${isbn}</p>
+          <p><strong>Title:</strong> Example Book Title</p>
+          <p><strong>Availability:</strong> Available</p>
+        </div>
+        <button onclick="addToCart('${isbn}')">Add to Cart</button>
+      `;
+    } else {
+      container.innerHTML = "<p>No ISBN provided.</p>";
+    }
+  }
+
+  function addToCart(isbn) {
+    alert(`Book with ISBN ${isbn} added to your cart!`);
+    
+  }
+
+  const isbn = getISBNParam();
+  displayResults(isbn);
+</script>
+
+</body>
+</html>

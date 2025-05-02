@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Barcode Scanner Interface</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+      background-color: #e8f8f5;
+    }
+    h1 {
+      color: #117a65;
+      text-align: center;
+    }
+    .scanner-container {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 400px; 
+      margin: 0 auto; 
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    }
+    input, button {
+      width: 100%; 
+      margin-top: 10px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #1abc9c;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #148f77;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Scan ISBN Barcode</h1>
+
+<div class="scanner-container">
+  <input type="text" id="isbnInput" placeholder="Enter or Scan ISBN">
+  <button onclick="searchISBN()">Search Book</button>
+</div>
+
+<script>
+  function searchISBN() {
+    const isbn = document.getElementById('isbnInput').value.trim();
+    if (isbn) {
+      
+      const encodedISBN = encodeURIComponent(isbn);
+      window.location.href = `quickResults.html?isbn=${encodedISBN}`;
+    } else {
+      alert("Please enter or scan an ISBN.");
+    }
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Donation Intake Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+      background-color: #f0f8ff;
+    }
+    h1 {
+      color: #2e86de;
+      text-align: center;
+    }
+    form {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 500px;
+      margin: 0 auto; /* Center the form horizontally */
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    label {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    input, select, textarea, button {
+      display: block;
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #2e86de;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+    button:hover {
+      background-color: #1b4f72;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Donation Intake Form</h1>
+
+<form id="donationForm">
+  <label for="donorName">Donor Name:</label>
+  <input type="text" id="donorName" required>
+
+  <label for="email">Email Address:</label>
+  <input type="email" id="email" required>
+
+  <label for="bookTitle">Book Title:</label>
+  <input type="text" id="bookTitle" required>
+
+  <label for="condition">Book Condition:</label>
+  <select id="condition" required>
+    <option value="">Select condition</option>
+    <option value="New">New</option>
+    <option value="Good">Good</option>
+    <option value="Fair">Fair</option>
+    <option value="Poor">Poor</option>
+  </select>
+
+  <label for="notes">Additional Notes:</label>
+  <textarea id="notes" rows="3"></textarea>
+
+  <button type="button" onclick="submitDonation()">Submit Donation</button>
+</form>
+
+<script>
+  function submitDonation() {
+    
+    const donorName = document.getElementById('donorName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const bookTitle = document.getElementById('bookTitle').value.trim();
+    const condition = document.getElementById('condition').value;
+
+    
+    if (!donorName) {
+      alert("Please enter the donor's name.");
+      return;
+    }
+    if (!email || !validateEmail(email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+    if (!bookTitle) {
+      alert("Please enter the book title.");
+      return;
+    }
+    if (!condition) {
+      alert("Please select the book condition.");
+      return;
+    }
+
+    
+    alert("Donation submitted successfully! Thank you for your support.");
+    document.getElementById('donationForm').reset();
+  }
+
+  
+  function validateEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+</script>
+
+</body>
+</html>

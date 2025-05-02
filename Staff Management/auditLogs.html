@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Audit Logs</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+      background-color: #fefefe;
+    }
+    h1 {
+      color: #34495e;
+    }
+    .logs-container {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background-color: #2c3e50;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Staff Audit Logs</h1>
+
+<div class="logs-container">
+  <table>
+    <thead>
+      <tr>
+        <th>Date/Time</th>
+        <th>Staff Member</th>
+        <th>Action Performed</th>
+      </tr>
+    </thead>
+    <tbody id="auditLogs">
+      
+    </tbody>
+  </table>
+</div>
+
+<script>
+  const logs = [
+    { date: "2025-04-25 10:30AM", staff: "Alice", action: "Checked out book to patron" },
+    { date: "2025-04-25 11:00AM", staff: "Bob", action: "Updated inventory records" },
+    { date: "2025-04-25 02:15PM", staff: "Charlie", action: "Assigned new role to staff" }
+  ];
+
+  const logTable = document.getElementById('auditLogs');
+
+  logs.forEach(log => {
+    const row = `<tr>
+                  <td>${log.date}</td>
+                  <td>${log.staff}</td>
+                  <td>${log.action}</td>
+                </tr>`;
+    logTable.innerHTML += row;
+  });
+</script>
+
+</body>
+</html>

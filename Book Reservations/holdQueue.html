@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hold Queue</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+      background-color: #eef2f3;
+    }
+    h1 {
+      color: #2c3e50;
+    }
+    .queue-container {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      background: #d9edf7;
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Hold Queue</h1>
+
+<div class="queue-container">
+  <ul id="holdQueue">
+    
+  </ul>
+</div>
+
+<script>
+  const holdQueue = [
+    "The Great Gatsby",
+    "To Kill a Mockingbird",
+    "1984",
+    "Harry Potter and the Sorcerer's Stone"
+  ];
+
+  const queueList = document.getElementById('holdQueue');
+
+  holdQueue.forEach((book, index) => {
+    const listItem = document.createElement('li');
+    listItem.textContent = `${index + 1}. ${book}`;
+    queueList.appendChild(listItem);
+  });
+</script>
+
+</body>
+</html>

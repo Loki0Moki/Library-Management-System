@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Acknowledgment Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fdf5e6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      width: 100%;
+      max-width: 500px;
+      padding: 20px;
+    }
+    h1 {
+      color: #d35400;
+      text-align: center;
+    }
+    .form-container, .acknowledgment {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .form-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center; 
+    }
+    label {
+      margin-top: 10px;
+      font-weight: bold;
+      align-self: flex-start; 
+    }
+    input, button {
+      width: 100%; 
+      margin-top: 10px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #e67e22;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+    button:hover {
+      background-color: #ca6f1e;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Generate Acknowledgment Letter</h1>
+
+    <div class="form-container">
+      <label for="ackName">Donor Name:</label>
+      <input type="text" id="ackName" placeholder="Enter donor's name">
+
+      <button onclick="generateAcknowledgment()">Generate Letter</button>
+    </div>
+
+    <div class="acknowledgment" id="acknowledgmentLetter" style="display:none;">
+    </div>
+  </div>
+
+  <script>
+    function generateAcknowledgment() {
+      const name = document.getElementById('ackName').value;
+      const letterDiv = document.getElementById('acknowledgmentLetter');
+      if (name) {
+        letterDiv.style.display = 'block';
+        letterDiv.innerHTML = `
+          <h2>Thank You, ${name}!</h2>
+          <p>We sincerely appreciate your generous book donation to our library. 
+          Your support helps us enrich our collection and serve our community better.</p>
+          <p>Sincerely,<br>The Library Team</p>
+        `;
+      } else {
+        alert("Please enter the donor's name.");
+      }
+    }
+  </script>
+
+</body>
+</html>

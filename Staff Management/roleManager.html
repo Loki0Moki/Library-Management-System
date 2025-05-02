@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Role Manager</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+      background-color: #f5eef8;
+    }
+    h1 {
+      color: #884ea0;
+    }
+    .role-form {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    select, button {
+      display: block;
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px;
+    }
+    button {
+      background-color: #af7ac5;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #884ea0;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Assign Roles</h1>
+
+<div class="role-form">
+  <label for="staffName">Staff Name:</label>
+  <input type="text" id="staffName" placeholder="Enter staff name">
+
+  <label for="roleSelect">Role:</label>
+  <select id="roleSelect">
+    <option value="">Select Role</option>
+    <option value="Librarian">Librarian</option>
+    <option value="Clerk">Clerk</option>
+    <option value="Admin">Admin</option>
+  </select>
+
+  <button onclick="assignRole()">Assign Role</button>
+</div>
+
+<script>
+  function assignRole() {
+    const staff = document.getElementById('staffName').value;
+    const role = document.getElementById('roleSelect').value;
+
+    if (staff && role) {
+      alert(`${staff} has been assigned the role of ${role}.`);
+      document.getElementById('staffName').value = '';
+      document.getElementById('roleSelect').value = '';
+    } else {
+      alert("Please enter staff name and select a role.");
+    }
+  }
+</script>
+
+</body>
+</html>

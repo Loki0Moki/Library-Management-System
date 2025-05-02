@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Shift Schedule</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+      background-color: #eaf2f8;
+    }
+    h1 {
+      color: #2874a6;
+    }
+    .schedule {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #bbb;
+      text-align: center;
+    }
+    th {
+      background-color: #3498db;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Staff Shift Schedule</h1>
+
+<div class="schedule">
+  <table>
+    <thead>
+      <tr>
+        <th>Staff Name</th>
+        <th>Shift</th>
+        <th>Day</th>
+      </tr>
+    </thead>
+    <tbody id="shiftTable">
+      
+    </tbody>
+  </table>
+</div>
+
+<script>
+  const shifts = [
+    { name: "Alice", shift: "Morning", day: "Monday" },
+    { name: "Bob", shift: "Evening", day: "Tuesday" },
+    { name: "Charlie", shift: "Night", day: "Friday" }
+  ];
+
+  const shiftTable = document.getElementById('shiftTable');
+
+  shifts.forEach(staff => {
+    const row = `<tr>
+                  <td>${staff.name}</td>
+                  <td>${staff.shift}</td>
+                  <td>${staff.day}</td>
+                </tr>`;
+    shiftTable.innerHTML += row;
+  });
+</script>
+
+</body>
+</html>
