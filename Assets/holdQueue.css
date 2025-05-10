@@ -1,0 +1,24 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 30px;
+    background-color: #eef2f3;
+  }
+  h1 {
+    color: #2c3e50;
+  }
+  .queue-container {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  li {
+    background: #d9edf7;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 8px;
+  }
+  
