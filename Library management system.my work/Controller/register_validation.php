@@ -7,13 +7,13 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     exit();
 }
 
-// Collect form input
+// Collect input
 $name = trim($_POST["name"]);
 $email = trim($_POST["email"]);
 $password = $_POST["password"];
 $confirm = $_POST["confirm_password"];
 
-// Validate form input
+// Validate
 if (empty($name) || empty($email) || empty($password) || empty($confirm) || empty($_FILES['id_proof'])) {
     $_SESSION["register_error"] = "All fields including ID proof are required.";
     header("Location: ../View/register.php");
@@ -32,11 +32,17 @@ if ($password !== $confirm) {
     exit();
 }
 
-// Check for duplicate email
-$email_escaped = mysqli_real_escape_string($conn, $email);
-$sql = "SELECT id FROM users WHERE email = '$email_escaped'";
-$result = mysqli_query($conn, $sql);
+// Escape input
+$name = mysqli_real_escape_string($conn, $name);
+$email = mysqli_real_escape_string($conn, $email);
+$password = mysqli_real_escape_string($conn, $password);
+$role = "user";
+$library_card_number = "LIB-" . strtoupper(uniqid());
+$card = mysqli_real_escape_string($conn, $library_card_number);
 
+// Check for existing email
+$sql = "SELECT id FROM users WHERE email = '$email'";
+$result = mysqli_query($conn, $sql);
 if (mysqli_num_rows($result) > 0) {
     $_SESSION["register_error"] = "This email is already registered.";
     header("Location: ../View/register.php");
@@ -49,7 +55,6 @@ $upload_dir = "../uploads/id_proofs/";
 if (!is_dir($upload_dir)) {
     mkdir($upload_dir, 0777, true);
 }
-
 $filename = time() . "_" . basename($_FILES['id_proof']['name']);
 $target_file = $upload_dir . $filename;
 
@@ -59,17 +64,11 @@ if (!move_uploaded_file($_FILES['id_proof']['tmp_name'], $target_file)) {
     exit();
 }
 
-// Prepare and insert user data
-$role = "user";
-$library_card_number = "LIB-" . strtoupper(uniqid());
-$name_escaped = mysqli_real_escape_string($conn, $name);
-$password_escaped = mysqli_real_escape_string($conn, $password);
-$id_proof_escaped = mysqli_real_escape_string($conn, $target_file);
-$role_escaped = mysqli_real_escape_string($conn, $role);
-$card_escaped = mysqli_real_escape_string($conn, $library_card_number);
+$id_proof = mysqli_real_escape_string($conn, $target_file);
 
+// Insert into database
 $insert_sql = "INSERT INTO users (name, email, id_proof, password, role, library_card_number)
-               VALUES ('$name_escaped', '$email_escaped', '$id_proof_escaped', '$password_escaped', '$role_escaped', '$card_escaped')";
+               VALUES ('$name', '$email', '$id_proof', '$password', '$role', '$card')";
 
 if (mysqli_query($conn, $insert_sql)) {
     $_SESSION["library_card_number"] = $library_card_number;
@@ -82,3 +81,4 @@ if (mysqli_query($conn, $insert_sql)) {
 }
 
 mysqli_close($conn);
+?>

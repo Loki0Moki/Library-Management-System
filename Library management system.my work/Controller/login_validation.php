@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result && mysqli_num_rows($result) === 1) {
         $user = mysqli_fetch_assoc($result);
 
-        if ($password === $user['password']) {  // ✅ Plain password comparison
+        if ($password === $user['password']) {  
             $_SESSION["user_id"] = $user['id'];
             $_SESSION["name"] = $user['name'];
             $_SESSION["email"] = $user['email'];

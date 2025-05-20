@@ -40,5 +40,16 @@ $loans = getReturnedLoans($conn, $_SESSION['user_id']);
         </form>
         <p><a href="view_loans.php">← Back to Loans</a></p>
     </div>
+    <script>
+        window.onload = function() {
+            // Get today's date in YYYY-MM-DD format
+            const today = new Date().toISOString().split('T')[0];
+            
+            // Set minimum date for return date
+            const returnDate = document.getElementById('return_date');
+            returnDate.min = today;
+            returnDate.value = today;
+        }
+    </script>
 </body>
 </html>

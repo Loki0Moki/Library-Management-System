@@ -52,5 +52,28 @@ if ($result && mysqli_num_rows($result) === 1) {
         </form>
         <p><a href="dashboard_user.php">← Back to Dashboard</a></p>
     </div>
+    <script>
+        window.onload = function() {
+            // Get today's date in YYYY-MM-DD format
+            const today = new Date().toISOString().split('T')[0];
+            
+            // Set minimum date for borrow date
+            const borrowDate = document.getElementById('borrow_date');
+            borrowDate.min = today;
+            borrowDate.value = today;
+            
+            // Set minimum date for return date
+            const returnDate = document.getElementById('return_date');
+            returnDate.min = today;
+            
+            // Update return date minimum when borrow date changes
+            borrowDate.addEventListener('change', function() {
+                returnDate.min = this.value;
+                if(returnDate.value < this.value) {
+                    returnDate.value = this.value;
+                }
+            });
+        }
+    </script>
 </body>
 </html>
