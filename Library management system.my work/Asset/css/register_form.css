@@ -2,46 +2,46 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI', sans-serif;
-    background-image: url('../images/2.jpg');
+    background-image: url('../images/3.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     min-height: 100vh;
 }
 
-/* Dark transparent overlay */
+/* Glassy dark overlay */
 .overlay {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.55);
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-/* Login box styling */
-.login-box {
-    background-color: rgba(255, 255, 255, 0.12);
+/* Registration box */
+.register-box {
+    background-color: rgba(255, 255, 255, 0.15);
     padding: 40px;
     border-radius: 15px;
     width: 100%;
-    max-width: 400px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    max-width: 500px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
     color: white;
 }
 
-.login-box h2 {
+.register-box h2 {
     text-align: center;
     margin-bottom: 25px;
     font-size: 28px;
 }
 
-.login-box label {
+.register-box label {
     font-weight: bold;
     display: block;
     margin-top: 15px;
 }
 
-.login-box input {
+.register-box input {
     width: 100%;
     padding: 12px;
     border-radius: 6px;
@@ -52,7 +52,7 @@ body {
     font-size: 16px;
 }
 
-.login-box button {
+.register-box button {
     width: 100%;
     margin-top: 25px;
     padding: 12px;
@@ -65,20 +65,20 @@ body {
     transition: background-color 0.3s ease;
 }
 
-.login-box button:hover {
+.register-box button:hover {
     background-color: #3a75d3;
 }
 
-.login-box .link {
+.register-box .link {
     text-align: center;
     margin-top: 15px;
     font-size: 14px;
 }
 
-.login-box .link a {
+.register-box .link a {
     color: #add8ff;
     text-decoration: none;
 }
-.login-box .link a:hover {
+.register-box .link a:hover {
     text-decoration: underline;
 }

@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'user') {
+if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
@@ -9,24 +9,21 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'user') {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>User Dashboard - Library System</title>
-    <link rel="stylesheet" href="../Asset/css/style.css">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="../Asset/css/dashboard.css">
 </head>
 <body>
-    <header>
-        <h1>User Dashboard</h1>
-        <nav>
-            <a href="search_books.php">Search Books</a> |
-            <a href="view_loans.php">My Loans</a> |
-            <a href="view_fines.php">My Fines</a> |
-            <a href="notification_center.php">Notifications</a> |
-            <a href="profile.php">Profile</a> |
-            <a href="../Controller/logout.php">Logout</a>
-        </nav>
-    </header>
-    <main>
-        <h2>Welcome, <?php echo $_SESSION['name']; ?>!</h2>
-        <p>Explore the library and manage your books easily.</p>
-    </main>
+    <div class="overlay">
+        <div class="dashboard-container">
+            <h1>Welcome to the Library</h1>
+            <h2><?php echo htmlspecialchars($_SESSION['name']); ?></h2>
+
+            <div class="dashboard-card"><a href="search_books.php" style="color: inherit; text-decoration: none;">Search Books</a></div>
+            <div class="dashboard-card"><a href="view_loans.php" style="color: inherit; text-decoration: none;">My Loans</a></div>
+            <div class="dashboard-card"><a href="notification_center.php" style="color: inherit; text-decoration: none;">Notifications</a></div>
+            <div class="dashboard-card"><a href="profile.php" style="color: inherit; text-decoration: none;">Profile</a></div>
+            <div class="dashboard-card"><a href="../Controller/logout.php" style="color: inherit; text-decoration: none;">Logout</a></div>
+        </div>
+    </div>
 </body>
 </html>

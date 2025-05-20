@@ -61,12 +61,11 @@ function updateUserName($conn, $user_id, $name) {
     return mysqli_query($conn, $sql);
 }
 
-function updateUserName($conn, $user_id, $name) {
-    $user_id = mysqli_real_escape_string($conn, $user_id);
-    $name = mysqli_real_escape_string($conn, $name);
-
-    $sql = "UPDATE users SET name = '$name' WHERE id = '$user_id'";
-    return mysqli_query($conn, $sql);
+function emailExists($conn, $email) {
+    $email = mysqli_real_escape_string($conn, $email);
+    $sql = "SELECT id FROM users WHERE email = '$email'";
+    $result = mysqli_query($conn, $sql);
+    return mysqli_num_rows($result) > 0;
 }
 
 function authenticateUser($conn, $email) {
