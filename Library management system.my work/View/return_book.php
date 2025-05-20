@@ -1,29 +1,44 @@
 <?php
 session_start();
+require_once("../Model/db_connect.php");
+
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'user') {
     header("Location: login.php");
     exit();
 }
-$title = $_GET['title'] ?? 'Unknown Book';
+
+$loan_id = $_GET['loan_id'] ?? null;
+
+if (!$loan_id) {
+    $_SESSION['loan_message'] = "Invalid loan request.";
+    header("Location: view_loans.php");
+    exit();
+}
+
+$user_id = $_SESSION['user_id'];
+$loans = getReturnedLoans($conn, $_SESSION['user_id']);
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Return Book - Library System</title>
+    <title>Return Book</title>
     <link rel="stylesheet" href="../Asset/css/style.css">
 </head>
 <body>
     <div class="form-container">
         <h2>Return Book</h2>
-        <form action="../Controller/return_process.php" method="post">
-            <input type="hidden" name="title" value="<?php echo htmlspecialchars($title); ?>">
-            <p>Returning: <strong><?php echo htmlspecialchars($title); ?></strong></p>
+        <form method="post" action="../Controller/return_process.php">
+            <input type="hidden" name="loan_id" value="<?php echo htmlspecialchars($loan_id); ?>">
+           
             <label for="return_date">Return Date:</label>
             <input type="date" name="return_date" id="return_date" required>
-            <button type="submit">Return Book</button>
+            <button type="submit">Confirm Return</button>
         </form>
-        <p><a href="view_loans.php">← Back to My Loans</a></p>
+        <p><a href="view_loans.php">← Back to Loans</a></p>
     </div>
 </body>
 </html>

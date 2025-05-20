@@ -40,5 +40,9 @@
             </div>
         </div>
     </div>
+
+    <!-- JavaScript validation file -->
+    <script src="../Asset/js/register.js"></script>
+    
 </body>
 </html>

@@ -1,14 +1,20 @@
 <?php
 session_start();
-if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'user') {
+require_once("../Model/db_connect.php");
+
+if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
-$fines = [
-    ['title' => 'Book A', 'due_date' => '2025-04-25', 'returned' => '2025-05-01', 'fine' => 1.50],
-    ['title' => 'Book C', 'due_date' => '2025-04-10', 'returned' => '2025-04-20', 'fine' => 2.50]
-];
-$total_fine = array_sum(array_column($fines, 'fine'));
+
+$user_id = $_SESSION['user_id'];
+$today = date('Y-m-d');
+$total_fine = 0;
+$fine_details = [];
+
+$fine_data = calculateUserFines($conn, $user_id);
+$total_fine = $fine_data['total'];
+$fine_details = $fine_data['details'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,27 +22,73 @@ $total_fine = array_sum(array_column($fines, 'fine'));
     <meta charset="UTF-8">
     <title>My Fines - Library System</title>
     <link rel="stylesheet" href="../Asset/css/style.css">
+    <style>
+        .fine-container {
+            max-width: 700px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 16px;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4c91ff;
+            color: white;
+        }
+
+        .pay-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .pay-btn:hover {
+            background-color: #218838;
+        }
+    </style>
 </head>
 <body>
-    <div class="table-container">
-        <h2>Overdue Fines</h2>
-        <table>
-            <tr>
-                <th>Book Title</th>
-                <th>Due Date</th>
-                <th>Returned On</th>
-                <th>Fine ($)</th>
-            </tr>
-            <?php foreach ($fines as $fine): ?>
+    <div class="fine-container">
+        <h2>💸 Your Total Fine</h2>
+        <?php if (empty($fine_details)): ?>
+            <p>You have no outstanding fines.</p>
+        <?php else: ?>
+            <table>
                 <tr>
-                    <td><?php echo htmlspecialchars($fine['title']); ?></td>
-                    <td><?php echo $fine['due_date']; ?></td>
-                    <td><?php echo $fine['returned']; ?></td>
-                    <td><?php echo number_format($fine['fine'], 2); ?></td>
+                    <th>Book Title</th>
+                    <th>Days Overdue</th>
+                    <th>Fine (৳)</th>
                 </tr>
-            <?php endforeach; ?>
-        </table>
-        <p><strong>Total Fine: $<?php echo number_format($total_fine, 2); ?></strong></p>
+                <?php foreach ($fine_details as $row): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($row['title']); ?></td>
+                        <td><?php echo $row['days']; ?></td>
+                        <td><?php echo $row['fine']; ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+            <p><strong>Total Fine:</strong> <?php echo $total_fine; ?> ৳</p>
+            <form method="post" action="#">
+                <button class="pay-btn" type="submit">Pay Now</button>
+            </form>
+        <?php endif; ?>
         <p><a href="dashboard_user.php">← Back to Dashboard</a></p>
     </div>
 </body>

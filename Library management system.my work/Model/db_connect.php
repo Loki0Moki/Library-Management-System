@@ -4,10 +4,9 @@ $username = "root";
 $password = "";
 $dbname = "library_db";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
 }
 
 function insertLoan($conn, $user_id, $book_title, $borrow_date, $return_date) {
@@ -104,6 +103,72 @@ function returnBook($conn, $user_id, $book_title, $return_date) {
 
     return mysqli_query($conn, $sql);
 }
+
+function getReturnedLoans($conn, $user_id) {
+    $user_id = mysqli_real_escape_string($conn, $user_id);
+    $sql = "SELECT id, book_title, borrow_date, return_date, actual_return, status 
+            FROM loans 
+            WHERE user_id = '$user_id' AND status = 'Returned' 
+            ORDER BY actual_return DESC";
+
+    $result = mysqli_query($conn, $sql);
+    $loans = [];
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $loans[] = $row;
+        }
+    }
+
+    return $loans;
+}
+
+function getUserLoans($conn, $user_id) {
+    $user_id = mysqli_real_escape_string($conn, $user_id);
+    $sql = "SELECT id, book_title, borrow_date, return_date, status 
+            FROM loans 
+            WHERE user_id = '$user_id' 
+            ORDER BY borrow_date DESC";
+    
+    $result = mysqli_query($conn, $sql);
+    $loans = [];
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $loans[] = $row;
+        }
+    }
+
+    return $loans;
+}
+
+function calculateUserFines($conn, $user_id, $rate_per_day = 20) {
+    $user_id = mysqli_real_escape_string($conn, $user_id);
+    $today = date('Y-m-d');
+    $fine_details = [];
+    $total_fine = 0;
+
+    $sql = "SELECT book_title, return_date FROM loans WHERE user_id = '$user_id' AND status = 'On Loan'";
+    $result = mysqli_query($conn, $sql);
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $days_overdue = (strtotime($today) - strtotime($row['return_date'])) / (60 * 60 * 24);
+            if ($days_overdue > 0) {
+                $fine = floor($days_overdue) * $rate_per_day;
+                $total_fine += $fine;
+                $fine_details[] = [
+                    'title' => $row['book_title'],
+                    'days' => floor($days_overdue),
+                    'fine' => $fine
+                ];
+            }
+        }
+    }
+
+    return ['total' => $total_fine, 'details' => $fine_details];
+}
+
 
 ?>
 

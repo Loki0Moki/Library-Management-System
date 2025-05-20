@@ -33,18 +33,16 @@ if ($password !== $confirm) {
 }
 
 // Check for duplicate email
-$check = $conn->prepare("SELECT id FROM users WHERE email = ?");
-$check->bind_param("s", $email);
-$check->execute();
-$check->store_result();
+$email_escaped = mysqli_real_escape_string($conn, $email);
+$sql = "SELECT id FROM users WHERE email = '$email_escaped'";
+$result = mysqli_query($conn, $sql);
 
-if ($check->num_rows > 0) {
+if (mysqli_num_rows($result) > 0) {
     $_SESSION["register_error"] = "This email is already registered.";
-    $check->close();
     header("Location: ../View/register.php");
     exit();
 }
-$check->close();
+mysqli_free_result($result);
 
 // Upload ID proof
 $upload_dir = "../uploads/id_proofs/";
@@ -61,26 +59,26 @@ if (!move_uploaded_file($_FILES['id_proof']['tmp_name'], $target_file)) {
     exit();
 }
 
-// Prepare data for insertion
-$hashed_password = password_hash($password, PASSWORD_DEFAULT);
+// Prepare and insert user data
 $role = "user";
 $library_card_number = "LIB-" . strtoupper(uniqid());
+$name_escaped = mysqli_real_escape_string($conn, $name);
+$password_escaped = mysqli_real_escape_string($conn, $password);
+$id_proof_escaped = mysqli_real_escape_string($conn, $target_file);
+$role_escaped = mysqli_real_escape_string($conn, $role);
+$card_escaped = mysqli_real_escape_string($conn, $library_card_number);
 
-// Insert new user
-$stmt = $conn->prepare("INSERT INTO users (name, email, id_proof, password, role, library_card_number)
-                        VALUES (?, ?, ?, ?, ?, ?)");
-$stmt->bind_param("ssssss", $name, $email, $target_file, $hashed_password, $role, $library_card_number);
+$insert_sql = "INSERT INTO users (name, email, id_proof, password, role, library_card_number)
+               VALUES ('$name_escaped', '$email_escaped', '$id_proof_escaped', '$password_escaped', '$role_escaped', '$card_escaped')";
 
-if ($stmt->execute()) {
+if (mysqli_query($conn, $insert_sql)) {
     $_SESSION["library_card_number"] = $library_card_number;
-header("Location: ../View/welcome_library_card.php");
-exit();
-
+    header("Location: ../View/welcome_library_card.php");
+    exit();
 } else {
     $_SESSION["register_error"] = "Registration failed. Please try again.";
     header("Location: ../View/register.php");
     exit();
 }
 
-$stmt->close();
-$conn->close();
+mysqli_close($conn);
