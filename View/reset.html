@@ -7,12 +7,17 @@
   <link rel="stylesheet" href="../Assets/reset.css">
 </head>
 <body>
-  <form action="login.html" onsubmit="return resetPassword()">
+  <form action="../Controller/reset-validation.php" method="POST">
     <h2>Reset Password</h2>
-    <input type="password" id="newPass" placeholder="New Password"><br>
-    <input type="password" id="confirmPass" placeholder="Confirm Password"><br>
+    <input type="password" name="newPass" id="newPass" placeholder="New Password" required><br>
+    <input type="password" name="confirmPass" id="confirmPass" placeholder="Confirm Password" required><br>
     <button type="submit">Reset</button>
   </form>
+
+  <div>
+    <p style="color:green;" id="successMsg"></p>
+    <p style="color:red;" id="errorMsg"></p>
+  </div>
 
   <script src="../Assets/reset.js"></script>
 </body>

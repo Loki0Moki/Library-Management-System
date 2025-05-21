@@ -8,12 +8,17 @@
 </head>
 <body>
   <form action="verify.html" onsubmit="return validateSignup()">
+    
+    <div class="login-container">
+       
     <h2>Signup</h2>
-    <input type="email" id="signupEmail" placeholder="Email"><br>
-    <input type="password" id="signupPass" placeholder="Password"><br>
-    <input type="password" id="signupConfirm" placeholder="Confirm Password"><br>
+    <input type="email" id="signupEmail" placeholder="Email" required><br>
+    <input type="password" id="signupPass" placeholder="Password" required><br>
+    <input type="password" id="signupConfirm" placeholder="Confirm Password" required><br>
+    <div id="signupError" style="color:red;margin-bottom:10px;"></div>
     <button type="submit">Signup</button>
   </form>
+  <p>Already have an account? <a href="login.html">Login</a></p>
 
   <script src="../Assets/signup.js"></script>
 </body>

@@ -10,10 +10,14 @@
 <h1>Scan ISBN Barcode</h1>
 
 <div class="scanner-container">
-  <input type="text" id="isbnInput" placeholder="Enter or Scan ISBN">
-  <button onclick="searchISBN()">Search Book</button>
+  <form method="post" action="../Controller/barcode-validation.php" onsubmit="return validateISBNForm()">
+    <input type="text" id="isbnInput" name="isbn" placeholder="Enter or Scan ISBN">
+    <button type="submit">Search Book</button>
+  </form>
 </div>
 
 <script src="../Assets/barcode.js"></script>
+
 </body>
 </html>
+

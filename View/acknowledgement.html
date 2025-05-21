@@ -8,18 +8,14 @@
 <body>
   <div class="container">
     <h1>Generate Acknowledgment Letter</h1>
-
-    <div class="form-container">
+    <form class="form-container" method="post" action="../Controller/acknowledgement-validation.php" onsubmit="return validateForm()">
       <label for="ackName">Donor Name:</label>
-      <input type="text" id="ackName" placeholder="Enter donor's name">
-
-      <button onclick="generateAcknowledgment()">Generate Letter</button>
-    </div>
-
-    <div class="acknowledgment" id="acknowledgmentLetter" style="display:none;">
-    </div>
+      <input type="text" id="ackName" name="ackName" placeholder="Enter donor's name">
+      <button type="submit">Generate Letter</button>
+    </form>
+    <div id="ack-messages"></div>
+    <div class="acknowledgment" id="acknowledgmentLetter" style="display:none;"></div>
   </div>
-
   <script src="../Assets/acknowledgement.js"></script>
 </body>
 </html>

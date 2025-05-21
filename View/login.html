@@ -1,20 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
-  <link rel="stylesheet" href="../Assets/login.css">
+    <meta charset="UTF-8">
+    <title>Library Login</title>
+    <link rel="stylesheet" href="../Assets/login.css">
 </head>
 <body>
-  <form action="account.html" onsubmit="return loginUser()">
-    <h2>Login</h2>
-    <input type="email" id="loginEmail" placeholder="Email"><br>
-    <input type="password" id="loginPass" placeholder="Password"><br>
-    <button type="submit">Login</button>
-    <p><a href="forgot.html">Forgot Password?</a></p>
-  </form>
-
-  <script src="../Assets/login.js"></script>
+    <div class="login-container">
+        
+        <h1>Library Login</h1>
+        <form action="../Controller/loginCheck.php" method="post" autocomplete="off">
+            <form action="../Controller/login-validation.php" method="post" autocomplete="off"></form>
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <div style="width:100%;display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+                <label style="font-size:0.95rem;">
+                    <input type="checkbox" name="remember" style="margin-right:6px;"> Remember me
+                </label>
+                <a href="forgot.html" style="font-size:0.95rem;margin:0;">Forgot?</a>
+            </div>
+            <input type="submit" name="submit" value="Login">
+        </form>
+        <a href="signup.html">Don't have an account? Sign up</a>
+    </div>
 </body>
 </html>

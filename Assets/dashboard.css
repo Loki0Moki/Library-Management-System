@@ -1,11 +1,13 @@
 body {
     font-family: Arial, sans-serif;
+    background:  url('../Images/librarydasboard.jpeg') no-repeat center center fixed;
+    background-size: cover;
     margin: 20px;
     background-color: #f4f4f4;
   }
   
   h1 {
-    color: #333;
+    color: #fff;
   }
   
   .widget {
@@ -36,4 +38,3 @@ body {
     color: #0077cc;
     font-weight: bold;
   }
-  
