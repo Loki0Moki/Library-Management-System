@@ -13,24 +13,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    // Use procedural authenticateUser or your own SELECT query
-    $email_escaped = mysqli_real_escape_string($conn, $email);
-    $sql = "SELECT id, name, email, password, role FROM users WHERE email = '$email_escaped'";
-    $result = mysqli_query($conn, $sql);
+    $user = authenticateUser($conn, $email);
+    if ($user && $password === $user['password']) { // replace with password_verify if hashed
+        $_SESSION["user_id"] = $user['id'];
+        $_SESSION["name"] = $user['name'];
+        $_SESSION["email"] = $user['email'];
+        $_SESSION["role"] = $user['role'];
 
-    if ($result && mysqli_num_rows($result) === 1) {
-        $user = mysqli_fetch_assoc($result);
-
-        if ($password === $user['password']) {  
-            $_SESSION["user_id"] = $user['id'];
-            $_SESSION["name"] = $user['name'];
-            $_SESSION["email"] = $user['email'];
-            $_SESSION["role"] = $user['role'];
-
-            $redirect = ($user['role'] === 'admin') ? "dashboard_admin.php" : "dashboard_user.php";
-            header("Location: ../View/$redirect");
-            exit();
-        }
+        $redirect = ($user['role'] === 'admin') ? "dashboard_admin.php" : "dashboard_user.php";
+        header("Location: ../View/$redirect");
+        exit();
     }
 
     $_SESSION["error"] = "Invalid email or password.";

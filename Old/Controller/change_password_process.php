@@ -2,7 +2,6 @@
 session_start();
 require_once("../Model/db_connect.php");
 
-
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['user_id'])) {
     $id = $_SESSION['user_id'];
     $current = $_POST['current_password'];
@@ -15,10 +14,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['user_id'])) {
         exit();
     }
 
-    $stored_password = getUserPasswordHash($conn, $id);
+    $stored_hash = getUserPasswordHash($conn, $id);
 
-    if ($stored_password && $current === $stored_password) {
-        if (updateUserPassword($conn, $id, $new)) {
+    if ($stored_hash && password_verify($current, $stored_hash)) {
+        $new_hashed = password_hash($new, PASSWORD_DEFAULT);
+        if (updateUserPassword($conn, $id, $new_hashed)) {
             $_SESSION['pass_success'] = "Password updated.";
         } else {
             $_SESSION['pass_error'] = "Failed to update password.";

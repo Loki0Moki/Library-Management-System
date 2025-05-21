@@ -170,58 +170,5 @@ function calculateUserFines($conn, $user_id, $rate_per_day = 20) {
 }
 
 
-
-function calculateTotalFineByUserId($conn, $user_id, $rate_per_day = 20) {
-    $today = date('Y-m-d');
-    $total_fine = 0;
-
-    $sql = "SELECT return_date FROM loans WHERE user_id = ? AND status = 'On Loan'";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $user_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    while ($row = $result->fetch_assoc()) {
-        $return_date = $row['return_date'];
-        $days_overdue = (strtotime($today) - strtotime($return_date)) / (60 * 60 * 24);
-        if ($days_overdue > 0) {
-            $total_fine += floor($days_overdue) * $rate_per_day;
-        }
-    }
-
-    return $total_fine;
-}
-
-function searchBooks($conn, $keyword = '', $category = '') {
-    $query = "SELECT * FROM books WHERE 1";
-    $params = [];
-    $types = '';
-
-    if (!empty($keyword)) {
-        $query .= " AND (title LIKE ? OR author LIKE ?)";
-        $k = "%" . $keyword . "%";
-        $params[] = $k;
-        $params[] = $k;
-        $types .= "ss";
-    }
-
-    if (!empty($category)) {
-        $query .= " AND genre = ?";
-        $params[] = $category;
-        $types .= "s";
-    }
-
-    $stmt = $conn->prepare($query);
-
-    if (!empty($params)) {
-        $stmt->bind_param($types, ...$params);
-    }
-
-    $stmt->execute();
-    return $stmt->get_result();
-}
-
-
-
 ?>
 

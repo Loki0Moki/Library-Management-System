@@ -5,7 +5,30 @@ require_once("../Model/db_connect.php");
 $keyword = $_GET['keyword'] ?? '';
 $category = $_GET['category'] ?? '';
 
-$result = searchBooks($conn, $keyword, $category);
+$query = "SELECT * FROM books WHERE 1";
+$params = [];
+
+if (!empty($keyword)) {
+    $query .= " AND (title LIKE ? OR author LIKE ?)";
+    $k = "%" . $keyword . "%";
+    $params[] = $k;
+    $params[] = $k;
+}
+
+if (!empty($category)) {
+    $query .= " AND genre = ?";
+    $params[] = $category;
+}
+
+$stmt = $conn->prepare($query);
+
+if (!empty($params)) {
+    $types = str_repeat("s", count($params));
+    $stmt->bind_param($types, ...$params);
+}
+
+$stmt->execute();
+$result = $stmt->get_result();
 ?>
 <!DOCTYPE html>
 <html lang="en">

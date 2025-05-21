@@ -11,7 +11,20 @@ $user_id = $_SESSION['user_id'];
 $today = date('Y-m-d');
 $total_fine = 0;
 
-$total_fine = calculateTotalFineByUserId($conn, $user_id);
+// Calculate fine for overdue loans
+$sql = "SELECT return_date FROM loans WHERE user_id = ? AND status = 'On Loan'";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+while ($row = $result->fetch_assoc()) {
+    $return_date = $row['return_date'];
+    $days_overdue = (strtotime($today) - strtotime($return_date)) / (60 * 60 * 24);
+    if ($days_overdue > 0) {
+        $total_fine += floor($days_overdue) * 20;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
