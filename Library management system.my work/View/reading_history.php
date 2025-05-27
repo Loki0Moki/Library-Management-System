@@ -9,7 +9,6 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'user') {
 
 $user_id = $_SESSION['user_id'];
 
-// Fetch only loans that are "Returned"
 $loans = [];
 $sql = "SELECT id, book_title, borrow_date, return_date, actual_return, status 
         FROM loans 
@@ -28,15 +27,30 @@ if ($result && mysqli_num_rows($result) > 0) {
 <head>
     <meta charset="UTF-8">
     <title>Returned Books - Library System</title>
-    <link rel="stylesheet" href="../Asset/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: url('../Asset/images/10.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+        }
+
         .table-container {
-            max-width: 900px;
-            margin: 40px auto;
-            background: #fff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            max-width: 1000px;
+            margin: 60px auto;
+            background: rgba(255, 255, 255, 0.96);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+            color: #2e3a59;
+            font-size: 28px;
+            margin-bottom: 30px;
         }
 
         table {
@@ -46,8 +60,9 @@ if ($result && mysqli_num_rows($result) > 0) {
         }
 
         th, td {
-            padding: 12px;
-            border: 1px solid #ddd;
+            padding: 14px 12px;
+            border: 1px solid #ccc;
+            text-align: center;
         }
 
         th {
@@ -56,27 +71,52 @@ if ($result && mysqli_num_rows($result) > 0) {
         }
 
         tr:nth-child(even) {
-            background-color: #f9f9f9;
+            background-color: #f2f6ff;
         }
 
         .btn-link {
             display: inline-block;
-            margin-top: 20px;
+            margin-top: 30px;
             text-decoration: none;
-            padding: 10px 15px;
             background-color: #4c91ff;
             color: white;
+            padding: 12px 20px;
             border-radius: 8px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
         }
 
         .btn-link:hover {
-            background-color: #3a75d3;
+            background-color: #2e75f0;
+        }
+
+        p {
+            text-align: center;
+        }
+
+        @media screen and (max-width: 768px) {
+            .table-container {
+                padding: 20px;
+            }
+
+            table {
+                font-size: 14px;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+
+            .btn-link {
+                padding: 10px 16px;
+                font-size: 14px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="table-container">
-        <h2>📦 Returned Books</h2>
+        <h2>📘 Reading History (Returned Books)</h2>
 
         <?php if (count($loans) > 0): ?>
             <table>
@@ -98,10 +138,12 @@ if ($result && mysqli_num_rows($result) > 0) {
                 <?php endforeach; ?>
             </table>
         <?php else: ?>
-            <p>No returned books yet.</p>
+            <p>❌ No returned books yet.</p>
         <?php endif; ?>
 
-        <a href="dashboard_user.php" class="btn-link">← Back to Dashboard</a>
+        <div style="text-align: center;">
+            <a href="dashboard_user.php" class="btn-link">← Back to Dashboard</a>
+        </div>
     </div>
 </body>
 </html>

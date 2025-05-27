@@ -9,8 +9,6 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 $today = date('Y-m-d');
-$total_fine = 0;
-$fine_details = [];
 
 $fine_data = calculateUserFines($conn, $user_id);
 $total_fine = $fine_data['total'];
@@ -21,15 +19,31 @@ $fine_details = $fine_data['details'];
 <head>
     <meta charset="UTF-8">
     <title>My Fines - Library System</title>
-    <link rel="stylesheet" href="../Asset/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: url('../Asset/images/8.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+        }
+
         .fine-container {
-            max-width: 700px;
-            margin: 50px auto;
-            background: #fff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: 60px auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 28px;
+            color: #2e3a59;
+            margin-bottom: 30px;
         }
 
         table {
@@ -39,8 +53,9 @@ $fine_details = $fine_data['details'];
         }
 
         th, td {
-            padding: 12px;
+            padding: 14px 12px;
             border: 1px solid #ddd;
+            text-align: center;
         }
 
         th {
@@ -48,33 +63,69 @@ $fine_details = $fine_data['details'];
             color: white;
         }
 
+        tr:nth-child(even) {
+            background-color: #f3f6fc;
+        }
+
         .pay-btn {
-            margin-top: 20px;
-            padding: 10px 20px;
+            margin-top: 25px;
+            padding: 12px 28px;
             background-color: #28a745;
             border: none;
             color: white;
             font-size: 16px;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .pay-btn:hover {
             background-color: #218838;
+        }
+
+        .total-text {
+            text-align: right;
+            font-weight: bold;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            text-align: center;
+            background-color: #4c91ff;
+            color: white;
+            padding: 12px 20px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-link:hover {
+            background-color: #2e75f0;
+        }
+
+        .centered {
+            text-align: center;
         }
     </style>
 </head>
 <body>
     <div class="fine-container">
         <h2>💸 Your Total Fine</h2>
+
         <?php if (empty($fine_details)): ?>
-            <p>You have no outstanding fines.</p>
+            <p class="centered">✅ You have no outstanding fines.</p>
         <?php else: ?>
             <table>
                 <tr>
-                    <th>Book Title</th>
-                    <th>Days Overdue</th>
-                    <th>Fine (৳)</th>
+                    <th>📖 Book Title</th>
+                    <th>⏳ Days Overdue</th>
+                    <th>৳ Fine</th>
                 </tr>
                 <?php foreach ($fine_details as $row): ?>
                     <tr>
@@ -84,12 +135,17 @@ $fine_details = $fine_data['details'];
                     </tr>
                 <?php endforeach; ?>
             </table>
-            <p><strong>Total Fine:</strong> <?php echo $total_fine; ?> ৳</p>
+
+            <p class="total-text">Total Fine: <?php echo $total_fine; ?> ৳</p>
+
             <form method="post" action="#">
-                <button class="pay-btn" type="submit">Pay Now</button>
+                <button class="pay-btn" type="submit">💳 Pay Now</button>
             </form>
         <?php endif; ?>
-        <p><a href="dashboard_user.php">← Back to Dashboard</a></p>
+
+        <div class="centered">
+            <a href="dashboard_user.php" class="back-link">← Back to Dashboard</a>
+        </div>
     </div>
 </body>
 </html>
