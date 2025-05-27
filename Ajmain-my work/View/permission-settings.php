@@ -20,7 +20,7 @@
     <ul id="permissionList"></ul>
   </div>
 
-  <a href="role-assignment.html">Go to Role Assignment</a>
+  <a href="role-assignment.php">Go to Role Assignment</a>
 
   <script src="../Assets/role-assignment.js"></script>
 </body>

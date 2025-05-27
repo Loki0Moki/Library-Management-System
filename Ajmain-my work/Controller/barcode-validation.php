@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   </div>
 <?php endif; ?>
 
-<a href="../View/barcode.html">Go Back</a>
+<a href="../View/barcodeScanner.php">Go Back</a>
 
 </body>
 </html>

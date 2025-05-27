@@ -34,7 +34,7 @@ if (isset($_POST['submit'])) {
         }
     }
 } else {
-    header('Location: ../View/login.html');
+    header('Location: ../View/login.php');
     exit();
 }
 ?>

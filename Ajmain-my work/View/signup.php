@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="../Assets/signup.css">
 </head>
 <body>
-  <form action="verify.html" onsubmit="return validateSignup()">
+  <form action="verify.php" onsubmit="return validateSignup()">
     
     <div class="login-container">
        
@@ -18,7 +18,7 @@
     <div id="signupError" style="color:red;margin-bottom:10px;"></div>
     <button type="submit">Signup</button>
   </form>
-  <p>Already have an account? <a href="login.html">Login</a></p>
+  <p>Already have an account? <a href="login.php">Login</a></p>
 
   <script src="../Assets/signup.js"></script>
 </body>

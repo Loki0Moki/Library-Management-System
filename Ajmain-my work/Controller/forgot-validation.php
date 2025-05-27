@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   <?= htmlspecialchars($message) ?>
 </div>
 
-<a href="../View/forgot.html">← Back to Forgot Page</a>
+<a href="../View/forgot.php">← Back to Forgot Page</a>
 
 </body>
 </html>

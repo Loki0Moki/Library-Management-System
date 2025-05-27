@@ -14,9 +14,9 @@
         <h2>Profile Info</h2>
         <p>Name: <span id="userName">[User Name]</span></p>
         <p>Email: <span id="userEmail">[user@example.com]</span></p>
-        <a href="editProfile.html" class="button">Edit Profile</a><br>
-        <a href="changeAvatar.html" class="button">Change Avatar</a><br>
-        <a href="updatePassword.html" class="button">Update Password</a><br>
+        <a href="editProfile.php" class="button">Edit Profile</a><br>
+        <a href="changeAvatar.php" class="button">Change Avatar</a><br>
+        <a href="updatePassword.php" class="button">Update Password</a><br>
     </div>
     <script src="../Assets/viewProfile.js"></script>
 </body>

@@ -19,7 +19,7 @@
     <button onclick="assignRole()">Assign</button>
   </div>
 
-  <a href="permission-settings.html">Go to Permission Settings</a>
+  <a href="permission-settings.php">Go to Permission Settings</a>
 
   <script src="../Assets/role-assignment.js"></script>
 </body>

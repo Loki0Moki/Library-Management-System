@@ -6,7 +6,7 @@ if (isset($_SESSION['status']) && $_SESSION['status'] === true) {
 
     if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > $timeout_duration) {
         session_destroy();
-        header("Location: login.html?timeout=true");
+        header("Location: login.php?timeout=true");
         exit();
     }
 
@@ -14,7 +14,7 @@ if (isset($_SESSION['status']) && $_SESSION['status'] === true) {
     echo "<h1>Welcome, " . $_SESSION['username'] . "!</h1>";
     echo "<a href='logout.php'>Logout</a>";
 } else {
-    header('Location: ../View/login.html');
+    header('Location: ../View/login.php');
     exit();
 }
 ?>

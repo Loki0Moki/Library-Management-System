@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         foreach ($errors as $e) {
             echo "<p style='color:red'>" . htmlspecialchars($e) . "</p>";
         }
-        echo "<a href='../View/login.html'>← Back to Login</a>";
+        echo "<a href='../View/login.php'>← Back to Login</a>";
     } else {
         echo "<p style='color:green'>Input validation passed (no session logic here).</p>";
     }

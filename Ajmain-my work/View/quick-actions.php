@@ -12,6 +12,6 @@
     <li><button onclick="alert('Report generated')">Generate Report</button></li>
     <li><button onclick="alert('System synced')">Sync Data</button></li>
   </ul>
-  <a href="home-dashboard.html">Back to Dashboard</a>
+  <a href="home-dashboard.php">Back to Dashboard</a>
 </body>
 </html>

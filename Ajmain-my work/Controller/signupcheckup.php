@@ -16,11 +16,11 @@ if (isset($_POST['submit'])) {
             $file = fopen('users.txt', 'a');
             fwrite($file, $username . "|" . $password . "\n");
             fclose($file);
-            echo "Signup successful! <a href='../View/login.html'>Login now</a>";
+            echo "Signup successful! <a href='../View/login.php'>Login now</a>";
         }
     }
 } else {
-    header('Location: ../View/signup.html');
+    header('Location: ../View/signup.php');
     exit();
 }
 ?>

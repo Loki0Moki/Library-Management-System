@@ -10,6 +10,8 @@
 <h1>Donation Intake Form</h1>
 
 <form id="donationForm">
+  <form id="donationForm" method="post" action="../Controller/donation-validation.php">
+
   <label for="donorName">Donor Name:</label>
   <input type="text" id="donorName" required>
 
@@ -31,7 +33,8 @@
   <label for="notes">Additional Notes:</label>
   <textarea id="notes" rows="3"></textarea>
 
-  <button type="button" onclick="submitDonation()">Submit Donation</button>
+  <button type="submit">Submit Donation</button>
+
 </form>
 
 <script src="../Assets/doantionForm.js"></script>

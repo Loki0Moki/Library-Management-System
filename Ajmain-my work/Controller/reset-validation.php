@@ -28,15 +28,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errors)) {
         // If successful, redirect with success message
         $success = urlencode("Password reset successfully.");
-        header("Location: ../View/resetPassword.html?success=$success");
+        header("Location: ../View/resetPassword.php?success=$success");
     } else {
         // Redirect with error(s)
         $error = urlencode(implode(" ", $errors));
-        header("Location: ../View/resetPassword.html?error=$error");
+        header("Location: ../View/resetPassword.php?error=$error");
     }
 
     exit();
 } else {
-    header("Location: ../View/resetPassword.html?error=Invalid+request.");
+    header("Location: ../View/resetPassword.php?error=Invalid+request.");
     exit();
 }

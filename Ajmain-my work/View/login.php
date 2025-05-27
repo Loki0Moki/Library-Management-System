@@ -17,11 +17,11 @@
                 <label style="font-size:0.95rem;">
                     <input type="checkbox" name="remember" style="margin-right:6px;"> Remember me
                 </label>
-                <a href="forgot.html" style="font-size:0.95rem;margin:0;">Forgot?</a>
+                <a href="forgot.php" style="font-size:0.95rem;margin:0;">Forgot?</a>
             </div>
             <input type="submit" name="submit" value="Login">
         </form>
-        <a href="signup.html">Don't have an account? Sign up</a>
+        <a href="signup.php">Don't have an account? Sign up</a>
     </div>
 </body>
 </html>

@@ -10,7 +10,7 @@
         <h2>Email Verification</h2>
     </div>
   <div>
-    <form action="login.html" onsubmit="return verifyCode()">
+    <form action="login.php" onsubmit="return verifyCode()">
     <input type="text" id="code" placeholder="Verification Code"><br>
     <button type="submit">Verify</button>
   </form>

@@ -12,6 +12,6 @@
     <p>Daily Visits: </p>
     <p>Conversion Rate: </p>
   </div>
-  <a href="home-dashboard.html">Back to Dashboard</a>
+  <a href="home-dashboard.php">Back to Dashboard</a>
 </body>
 </html>

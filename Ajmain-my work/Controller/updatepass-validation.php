@@ -22,15 +22,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($errors)) {
         $success = urlencode("Password updated successfully.");
-        header("Location: ../View/updatePassword.html?success=$success");
+        header("Location: ../View/updatePassword.php?success=$success");
     } else {
         $error = urlencode(implode(" ", $errors));
-        header("Location: ../View/updatePassword.html?error=$error");
+        header("Location: ../View/updatePassword.php?error=$error");
     }
 
     exit();
 } else {
-    header("Location: ../View/updatePassword.html?error=Invalid+request+method.");
+    header("Location: ../View/updatePassword.php?error=Invalid+request+method.");
     exit();
 }
 ?>

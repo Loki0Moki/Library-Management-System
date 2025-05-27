@@ -1,86 +1,74 @@
-function validateDonorName(name) {
-  return fetch('../Controller/acknowledgement-validation.php', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: 'ackName=' + encodeURIComponent(name)
-  })
-  .then(response => response.json());
-}
+function validateNameLocally(name, msgDiv) {
+    // Clear previous messages
+    msgDiv.innerText = '';
 
-function generateAcknowledgment() {
-  const name = document.getElementById('ackName').value.trim();
-  const letterDiv = document.getElementById('acknowledgmentLetter');
-
-  if (!validateNameLocally(name)) {
-    return;
-  }
-
-  validateDonorName(name).then(result => {
-    if (result.valid) {
-      letterDiv.style.display = 'block';
-      letterDiv.innerHTML = `
-        <h2>Thank You, ${name}!</h2>
-        <p>We sincerely appreciate your generous book donation to our library. 
-        Your support helps us enrich our collection and serve our community better.</p>
-        <p>Sincerely,<br>The Library Team</p>
-      `;
-    } else {
-      letterDiv.style.display = 'none';
-      alert(result.message);
+    if (name === "") {
+        msgDiv.innerText = "Donor name is required.";
+        return false;
     }
-  });
+    if (name.length < 2) {
+        msgDiv.innerText = "Donor name must be at least 2 characters.";
+        return false;
+    }
+    if (!/^[a-zA-Z\s]+$/.test(name)) {
+        msgDiv.innerText = "Donor name must only contain letters and spaces.";
+        return false;
+    }
+    if (name.length > 50) {
+        msgDiv.innerText = "Donor name must not exceed 50 characters.";
+        return false;
+    }
+    return true;
 }
 
-// Local form validation before submission
-function validateNameLocally(name) {
-  if (name === "") {
-    alert("Donor name is required.");
-    return false;
-  }
-  if (name.length < 2) {
-    alert("Donor name must be at least 2 characters.");
-    return false;
-  }
-  if (!/^[a-zA-Z\s]+$/.test(name)) {
-    alert("Donor name must only contain letters and spaces.");
-    return false;
-  }
-  return true;
-}
-
-function validateForm() {
-  const name = document.getElementById('ackName').value.trim();
-  return validateNameLocally(name);
-}
-
-// Load result from query string
+// Event listener for form submission
 document.addEventListener('DOMContentLoaded', function() {
-  function getParam(name) {
-    const url = new URL(window.location.href);
-    return url.searchParams.get(name);
-  }
+    const form = document.getElementById('acknowledgmentForm');
+    const nameInput = document.getElementById('ackName');
+    const letterDiv = document.getElementById('acknowledgmentLetter');
+    const msgDiv = document.getElementById('ack-messages');
 
-  const error = getParam('error');
-  const success = getParam('success');
-  const donorName = getParam('name');
+    form.addEventListener('submit', function(e) {
+        e.preventDefault(); // Prevent default form submission
 
-  if (donorName) {
-    document.getElementById('ackName').value = donorName;
-  }
+        const name = nameInput.value.trim();
 
-  if (error) {
-    document.getElementById('ack-messages').innerHTML = '<div class="ack-error">' + decodeURIComponent(error) + '</div>';
-    document.getElementById('acknowledgmentLetter').style.display = 'none';
-  } else if (success && donorName) {
-    document.getElementById('acknowledgmentLetter').style.display = 'block';
-    document.getElementById('acknowledgmentLetter').innerHTML = `
-      <h2>Thank You, ${donorName}!</h2>
-      <p>We sincerely appreciate your generous book donation to our library. Your support helps us enrich our collection and serve our community better.</p>
-      <p>Sincerely,<br>The Library Team</p>
-    `;
-    document.getElementById('ack-messages').innerHTML = '';
-  } else {
-    document.getElementById('acknowledgmentLetter').style.display = 'none';
-    document.getElementById('ack-messages').innerHTML = '';
-  }
+        // Clear previous messages and hide letter
+        msgDiv.innerText = '';
+        letterDiv.style.display = 'none';
+        letterDiv.innerHTML = '';
+
+        // Perform client-side validation first
+        if (!validateNameLocally(name, msgDiv)) {
+            return; // Stop if client-side validation fails
+        }
+
+        // Make an actual fetch call to the PHP validation file
+        fetch('acknowledgement-validation.php', { // Path to your PHP file
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded' // Important for PHP to parse $_POST
+            },
+            body: 'ackName=' + encodeURIComponent(name) // Send the name as URL-encoded data
+        })
+        .then(response => {
+            // Check if the response is OK (status 200)
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json(); // Parse the JSON response
+        })
+        .then(result => {
+            if (result.success) {
+                letterDiv.style.display = 'block';
+                letterDiv.innerHTML = result.letter; // Use the letter HTML from the PHP response
+            } else {
+                msgDiv.innerText = result.error || 'An unexpected error occurred on the server.';
+            }
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+            msgDiv.innerText = 'Server error. Please try again later.';
+        });
+    });
 });

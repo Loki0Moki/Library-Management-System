@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         foreach ($errors as $err) {
             echo "<p style='color:red'>" . htmlspecialchars($err) . "</p>";
         }
-        echo "<a href='../View/signup.html'>← Back to Signup</a>";
+        echo "<a href='../View/signup.php'>← Back to Signup</a>";
     } else {
         echo "<p style='color:green'>Validation passed. Proceed to verify.</p>";
     }
