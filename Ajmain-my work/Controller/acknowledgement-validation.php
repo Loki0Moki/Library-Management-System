@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: application/json');
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Accept JSON as well as form data
+    
     $contentType = $_SERVER["CONTENT_TYPE"] ?? '';
     if (stripos($contentType, 'application/json') !== false) {
         $raw = file_get_contents('php://input');
