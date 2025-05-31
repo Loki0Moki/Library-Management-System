@@ -1,25 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Signup</title>
-  <link rel="stylesheet" href="../Assets/signup.css">
+    <meta charset="UTF-8" />
+    <title>Library Signup</title>
+    <link rel="stylesheet" href="../Assets/login.css" />
 </head>
 <body>
-  <form action="verify.php" onsubmit="return validateSignup()">
-    
     <div class="login-container">
-       
-    <h2>Signup</h2>
-    <input type="email" id="signupEmail" placeholder="Email" required><br>
-    <input type="password" id="signupPass" placeholder="Password" required><br>
-    <input type="password" id="signupConfirm" placeholder="Confirm Password" required><br>
-    <div id="signupError" style="color:red;margin-bottom:10px;"></div>
-    <button type="submit">Signup</button>
-  </form>
-  <p>Already have an account? <a href="login.php">Login</a></p>
-
-  <script src="../Assets/signup.js"></script>
+        <h1>Sign Up</h1>
+        <form action="../Controller/signupCheck.php" method="post" autocomplete="off">
+            <input type="text" name="username" placeholder="Username" required />
+            <input type="password" name="password" placeholder="Password" required />
+            <input type="password" name="confirm_password" placeholder="Confirm Password" required />
+            <input type="submit" name="submit" value="Sign Up" />
+        </form>
+        <a href="login.php">Already have an account? Login</a>
+      
+    </div>
+    <script src="../Assets/signup.js"></script>
 </body>
 </html>

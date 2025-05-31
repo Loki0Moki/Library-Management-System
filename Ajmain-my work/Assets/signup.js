@@ -1,11 +1,21 @@
 function validateSignup() {
+  const fullNameInput = document.getElementById('signupFullName');
   const emailInput = document.getElementById('signupEmail');
   const passInput = document.getElementById('signupPass');
   const confirmInput = document.getElementById('signupConfirm');
 
+  const fullName = fullNameInput.value.trim();
   const email = emailInput.value.trim();
   const pass = passInput.value.trim();
   const confirm = confirmInput.value.trim();
+
+  if (fullName === '' || fullName.length < 2) {
+    alert("Error: Full Name must be at least 2 characters long.");
+    fullNameInput.style.borderColor = 'red';
+    return false;
+  } else {
+    fullNameInput.style.borderColor = '#ccc';
+  }
 
   
   if (email === '') {

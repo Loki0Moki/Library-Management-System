@@ -1,9 +1,15 @@
 <?php
-function validateSignupInputs($email, $password, $confirm) {
+function validateSignupInputs($fullName, $email, $password, $confirm) {
+    $fullName = trim($fullName ?? '');
     $email = trim($email ?? '');
     $password = $password ?? '';
     $confirm = $confirm ?? '';
     $errors = [];
+
+    // Full Name checks
+    if ($fullName === '' || strlen($fullName) < 2) {
+        $errors[] = "Full Name must be at least 2 characters.";
+    }
 
     // Email checks (without regex)
     if ($email === '') {
@@ -25,7 +31,7 @@ function validateSignupInputs($email, $password, $confirm) {
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $errors = validateSignupInputs($_POST['email'], $_POST['password'], $_POST['confirm']);
+    $errors = validateSignupInputs($_POST['fullname'], $_POST['email'], $_POST['password'], $_POST['confirm']);
 
     if (!empty($errors)) {
         foreach ($errors as $err) {

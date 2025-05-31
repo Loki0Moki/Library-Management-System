@@ -1,6 +1,5 @@
 <?php
 
-
 function validateLoginInputs($username, $password) {
     $username = trim($username ?? '');
     $password = $password ?? '';
