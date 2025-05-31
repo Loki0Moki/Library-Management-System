@@ -146,7 +146,7 @@ session_start();
         </form>
 
         <div class="support-info">
-            <h4>📞 Phone:</h4>
+            <h4>Phone:</h4>
             <p>01618717196</p>
 
             <h4>✉️ Email:</h4>

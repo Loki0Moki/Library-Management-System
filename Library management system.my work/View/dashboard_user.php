@@ -97,6 +97,10 @@ $total_fine = calculateTotalFineByUserId($conn, $user_id);
             justify-content: center;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
+        .fine-highlight {
+            color: #c0392b;
+            font-weight: 700;
+        }
         @media screen and (max-width: 768px) {
             .top-header {
                 flex-direction: column;
@@ -122,28 +126,29 @@ $total_fine = calculateTotalFineByUserId($conn, $user_id);
 <body>
     <div class="hero">
         <div class="overlay-content">
-            
-            <!-- 🔝 Top Header -->
+
+            <!-- Top Header -->
             <div class="top-header">
-                <!-- 👤 Profile (Left) -->
+
+                <!--  Profile (Left) -->
                 <div class="top-left">
-                    <a href="profile.php" class="dashboard-card">👤 Profile</a>
+                    <a href="profile.php" class="dashboard-card"> Profile</a>
                 </div>
 
                 <!--  Title (Center) -->
                 <div class="dashboard-title">
-                    <h1> Library Management System</h1>
+                    <h1>Library Management System</h1>
                 </div>
 
-                <!-- 💸 Contact, Fine, Logout (Right) -->
+                <!-- Contact, Fine, Logout (Right) -->
                 <div class="top-right">
-                    <a href="view_fines.php" class="dashboard-card">💸 <?php echo $total_fine; ?> ৳</a>
+                    <a href="view_fines.php" class="dashboard-card">💸 Fine: <span class="fine-highlight"><?php echo number_format($total_fine, 2); ?> ৳</span></a>
                     <a href="contact_us.php" class="dashboard-card">📞 Contact</a>
                     <a href="../Controller/logout.php" class="dashboard-card">🚪 Logout</a>
                 </div>
             </div>
 
-            <!-- 📦 Middle Navigation Cards -->
+            <!--  Middle Navigation Cards -->
             <div class="middle-section">
                 <a href="book_catalog.php" class="dashboard-card">📚 Book Catalog</a>
                 <a href="view_loans.php" class="dashboard-card">📦 My Loans</a>

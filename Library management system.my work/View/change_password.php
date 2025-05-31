@@ -11,7 +11,7 @@ session_start();
 </head>
 <body>
     <div class="form-container">
-        <h2>🔐 Change Password</h2>
+        <h2> Change Password</h2>
 
         <?php if (isset($_SESSION['pass_success'])): ?>
             <p class="message success"><?php echo $_SESSION['pass_success']; unset($_SESSION['pass_success']); ?></p>

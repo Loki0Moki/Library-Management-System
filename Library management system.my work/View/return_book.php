@@ -98,7 +98,7 @@ $loans = getReturnedLoans($conn, $user_id);
 </head>
 <body>
     <div class="form-container">
-        <h2>📕 Return Book</h2>
+        <h2>Return Book</h2>
         <form method="post" action="../Controller/return_process.php">
             <input type="hidden" name="loan_id" value="<?php echo htmlspecialchars($loan_id); ?>">
 

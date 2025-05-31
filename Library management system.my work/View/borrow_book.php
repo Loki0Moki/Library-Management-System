@@ -15,16 +15,19 @@ if (!$book_id) {
     exit();
 }
 
-// Get book details from database
+// Check if the book is already loaned to this user and not returned
+$check_sql = "SELECT * FROM loans WHERE book_id = '$book_id' AND user_id = '{$_SESSION['user_id']}' AND status = 'On Loan'";
+$check_result = mysqli_query($conn, $check_sql);
+if (mysqli_num_rows($check_result) > 0) {
+    $_SESSION['loan_message'] = "You already borrowed this book.";
+    header("Location: view_loans.php");
+    exit();
+}
+
+// Get book title
 $sql = "SELECT title FROM books WHERE id = '$book_id'";
 $result = mysqli_query($conn, $sql);
-
-if ($result && mysqli_num_rows($result) === 1) {
-    $row = mysqli_fetch_assoc($result);
-    $title = $row['title'];
-} else {
-    $title = "Unknown Book";
-}
+$title = ($result && mysqli_num_rows($result) === 1) ? mysqli_fetch_assoc($result)['title'] : "Unknown Book";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -110,42 +113,42 @@ if ($result && mysqli_num_rows($result) === 1) {
     </style>
 </head>
 <body>
-    <div class="form-container">
-        <h2>📚 Borrow Book</h2>
-        <form action="../Controller/borrow_process.php" method="post">
-            <input type="hidden" name="book_id" value="<?php echo htmlspecialchars($book_id); ?>">
-            <input type="hidden" name="title" value="<?php echo htmlspecialchars($title); ?>">
+<div class="form-container">
+    <h2>📚 Borrow Book</h2>
+    <form action="../Controller/borrow_process.php" method="post">
+        <input type="hidden" name="book_id" value="<?php echo htmlspecialchars($book_id); ?>">
+        <input type="hidden" name="title" value="<?php echo htmlspecialchars($title); ?>">
 
-            <p>You are borrowing: <strong><?php echo htmlspecialchars($title); ?></strong></p>
+        <p>You are borrowing: <strong><?php echo htmlspecialchars($title); ?></strong></p>
 
-            <label for="borrow_date">Borrow Date:</label>
-            <input type="date" name="borrow_date" id="borrow_date" required>
+        <label for="borrow_date">Borrow Date:</label>
+        <input type="date" name="borrow_date" id="borrow_date" required>
 
-            <label for="return_date">Expected Return Date:</label>
-            <input type="date" name="return_date" id="return_date" required>
+        <label for="return_date">Expected Return Date:</label>
+        <input type="date" name="return_date" id="return_date" required>
 
-            <button type="submit">✅ Confirm Borrow</button>
-        </form>
-        <p><a href="dashboard_user.php">← Back to Dashboard</a></p>
-    </div>
-    <script>
-        window.onload = function() {
-            const today = new Date().toISOString().split('T')[0];
-            const borrowDate = document.getElementById('borrow_date');
-            const returnDate = document.getElementById('return_date');
+        <button type="submit"> Confirm Borrow</button>
+    </form>
+    <p><a href="dashboard_user.php">← Back to Dashboard</a></p>
+</div>
 
-            borrowDate.min = today;
-            borrowDate.value = today;
+<script>
+    window.onload = function () {
+        const today = new Date().toISOString().split('T')[0];
+        const borrowDate = document.getElementById('borrow_date');
+        const returnDate = document.getElementById('return_date');
 
-            returnDate.min = today;
+        borrowDate.min = today;
+        borrowDate.value = today;
+        returnDate.min = today;
 
-            borrowDate.addEventListener('change', function() {
-                returnDate.min = this.value;
-                if (returnDate.value < this.value) {
-                    returnDate.value = this.value;
-                }
-            });
-        }
-    </script>
+        borrowDate.addEventListener('change', function () {
+            returnDate.min = this.value;
+            if (returnDate.value < this.value) {
+                returnDate.value = this.value;
+            }
+        });
+    }
+</script>
 </body>
 </html>

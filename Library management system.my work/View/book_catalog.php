@@ -5,9 +5,11 @@ require_once("../Model/db_connect.php");
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    
+<meta charset="UTF-8">
     <title>Book Catalog</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    
     <style>
         body {
             margin: 0;
@@ -108,11 +110,11 @@ require_once("../Model/db_connect.php");
 </head>
 <body>
     <div class="catalog-container">
-        <h2>📚 Book Catalog</h2>
+        <h2>Book Catalog</h2>
 
-        <!-- Search Form -->
-        <form id="catalog-form">
-            <input type="text" name="keyword" id="keyword" placeholder="Search by title or author">
+ <!-- Search Form -->
+<form id="catalog-form">
+         <input type="text" name="keyword" id="keyword" placeholder="Search by title or author">
             <select name="category" id="category">
                 <option value="">All Categories</option>
                 <option value="Fiction">Fiction</option>
@@ -122,11 +124,12 @@ require_once("../Model/db_connect.php");
             </select>
         </form>
 
+
         <!-- Results Will Load Here -->
         <div id="book-results"></div>
 
         <a href="dashboard_user.php" class="back-link">← Back to Dashboard</a>
-    </div>
+        </div>
 
     <!-- Load AJAX Script -->
     <script src="../Asset/js/search_book_ajax.js"></script>

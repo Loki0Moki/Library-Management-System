@@ -116,10 +116,10 @@ $fine_details = $fine_data['details'];
 </head>
 <body>
     <div class="fine-container">
-        <h2>💸 Your Total Fine</h2>
+        <h2>Your Total Fine</h2>
 
         <?php if (empty($fine_details)): ?>
-            <p class="centered">✅ You have no outstanding fines.</p>
+            <p class="centered">You have no outstanding fines.</p>
         <?php else: ?>
             <table>
                 <tr>

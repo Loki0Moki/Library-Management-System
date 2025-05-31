@@ -17,7 +17,7 @@ if (!isset($_SESSION['role'])) {
             padding: 0;
             font-family: 'Poppins', sans-serif;
             background: url('../Asset/images/11.jpg') no-repeat center center fixed;
-            background-size: cover; /* ✨ makes the image large and fills full screen */
+            background-size: cover; /*makes the image large and fills full screen */
             color: #333;
             min-height: 100vh;
         }
@@ -71,7 +71,7 @@ if (!isset($_SESSION['role'])) {
 </head>
 <body>
     <div class="profile-container">
-        <h2>👤 My Profile</h2>
+        <h2>My Profile</h2>
 
         <div class="profile-info">
             <p><strong>Name:</strong> <?php echo htmlspecialchars($_SESSION['name']); ?></p>
@@ -79,8 +79,8 @@ if (!isset($_SESSION['role'])) {
         </div>
 
         <div class="profile-actions">
-            <a href="edit_profile.php">✏️ Edit Profile</a>
-            <a href="change_password.php">🔒 Change Password</a>
+            <a href="edit_profile.php">Edit Profile</a>
+            <a href="change_password.php">Change Password</a>
             <a href="dashboard_user.php">← Back to Dashboard</a>
         </div>
     </div>

@@ -54,21 +54,26 @@ $loans = getUserLoans($conn, $user_id);
         tr:nth-child(even) {
             background-color: #f3f6fc;
         }
-        .action-btn {
-            padding: 8px 16px;
-            background-color: #28a745;
-            color: white;
+        .action-btn, .edit-btn, .delete-btn {
+            padding: 8px 14px;
             border: none;
             border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        .return-link {
-            color: #dc3545;
+            font-size: 13px;
             font-weight: bold;
-            margin-left: 8px;
-            text-decoration: none;
+            cursor: pointer;
+            color: white;
+            margin: 2px;
+        }
+        .action-btn { background-color: #28a745; }
+        .edit-btn { background-color: #ffc107; }
+        .delete-btn { background-color: #dc3545; }
+        .return-link {
+            display: inline-block;
+            font-weight: bold;
+            margin-top: 5px;
             font-size: 14px;
+            color: #dc3545;
+            text-decoration: none;
         }
         .btn-link {
             display: inline-block;
@@ -82,7 +87,6 @@ $loans = getUserLoans($conn, $user_id);
             text-decoration: none;
         }
         .btn-link:hover { background-color: #2e75f0; }
-
         @media screen and (max-width: 768px) {
             table { font-size: 14px; }
             .action-btn { padding: 6px 12px; }
@@ -100,14 +104,21 @@ $loans = getUserLoans($conn, $user_id);
                 <th>Borrowed On</th>
                 <th>Due Date</th>
                 <th>Status</th>
-                <th>Action</th>
+                <th>Fine (৳)</th>
+                <th>Actions</th>
             </tr>
             <?php foreach ($loans as $loan): ?>
                 <tr id="loan-<?php echo $loan['id']; ?>">
                     <td><?php echo htmlspecialchars($loan['book_title']); ?></td>
                     <td><?php echo htmlspecialchars($loan['borrow_date']); ?></td>
-                    <td class="due-date"><?php echo htmlspecialchars($loan['return_date']); ?></td>
-                    <td class="status"><?php echo htmlspecialchars($loan['status']); ?></td>
+                    <td><?php echo htmlspecialchars($loan['return_date']); ?></td>
+                    <td><?php echo htmlspecialchars($loan['status']); ?></td>
+                    <td>
+                        <?php
+                        $fine = isset($loan['fine_amount']) ? (float)$loan['fine_amount'] : 0;
+                        echo $fine > 0 ? number_format($fine, 2) : "-";
+                        ?>
+                    </td>
                     <td>
                         <?php if ($loan['status'] === 'On Loan'): ?>
                             <button class="action-btn renew-btn" 
@@ -115,6 +126,9 @@ $loans = getUserLoans($conn, $user_id);
                                     data-title="<?php echo htmlspecialchars($loan['book_title']); ?>">
                                 Renew
                             </button>
+                            <a href="edit_loan.php?loan_id=<?php echo $loan['id']; ?>" class="edit-btn">Edit</a>
+                            <a href="../Controller/delete_loan.php?loan_id=<?php echo $loan['id']; ?>" class="delete-btn" onclick="return confirm('Are you sure you want to delete this loan?');">Delete</a>
+                            <br>
                             <a class="return-link" href="return_book.php?loan_id=<?php echo $loan['id']; ?>">Return</a>
                         <?php else: ?>
                             -
@@ -133,7 +147,6 @@ $loans = getUserLoans($conn, $user_id);
     </div>
 </div>
 
-<!-- AJAX -->
 <script src="../Asset/js/renew_loan_ajax.js"></script>
 </body>
 </html>
