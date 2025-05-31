@@ -138,7 +138,7 @@ if ($result && mysqli_num_rows($result) > 0) {
                 <?php endforeach; ?>
             </table>
         <?php else: ?>
-            <p>❌ No returned books yet.</p>
+            <p>No returned books yet.</p>
         <?php endif; ?>
 
         <div style="text-align: center;">

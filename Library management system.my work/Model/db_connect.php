@@ -50,7 +50,7 @@ function getReturnedLoans($conn, $user_id) {
     return $loans;
 }
 
-function getUserLoans($conn, $user_id) {
+/* function getUserLoans($conn, $user_id) {
     $user_id = mysqli_real_escape_string($conn, $user_id);
     $sql = "SELECT id, book_title, borrow_date, return_date, status 
             FROM loans 
@@ -65,8 +65,8 @@ function getUserLoans($conn, $user_id) {
         }
     }
 
-    return $loans;
-}
+    return $loans; 
+} */
 
 // === Book Functions ===
 function getBookDetailsByISBN($conn, $isbn) {
@@ -178,7 +178,7 @@ function calculateUserFines($conn, $user_id, $rate_per_day = 20) {
     return ['total' => $total_fine, 'details' => $fine_details];
 }
 
-function calculateTotalFineByUserId($conn, $user_id, $rate_per_day = 20) {
+/* function calculateTotalFineByUserId($conn, $user_id, $rate_per_day = 20) {
     $today = date('Y-m-d');
     $total_fine = 0;
 
@@ -197,6 +197,61 @@ function calculateTotalFineByUserId($conn, $user_id, $rate_per_day = 20) {
     }
 
     return $total_fine;
+} */
+
+function getUserLoans($conn, $user_id) {
+    $loans = [];
+    $fine_per_day = 20;
+
+    $sql = "SELECT * FROM loans WHERE user_id = '$user_id' ORDER BY borrow_date DESC";
+    $result = mysqli_query($conn, $sql);
+
+    if ($result) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $fine = 0;
+            if ($row['status'] === 'Returned' && !empty($row['actual_return'])) {
+                $due = strtotime($row['return_date']);
+                $actual = strtotime($row['actual_return']);
+                $grace_period = 2 * 86400;
+
+                if ($actual > $due + $grace_period) {
+                    $late_days = floor(($actual - $due - $grace_period) / 86400);
+                    $fine = $late_days * $fine_per_day;
+                }
+            }
+            $row['fine_amount'] = $fine;
+            $loans[] = $row;
+        }
+    }
+
+    return $loans;
 }
+
+
+function calculateTotalFineByUserId($conn, $user_id) {
+    $fine_per_day = 20;
+    $total_fine = 0;
+
+    $sql = "SELECT return_date, actual_return 
+            FROM loans 
+            WHERE user_id = '$user_id' AND status = 'Returned'";
+
+    $result = mysqli_query($conn, $sql);
+    if ($result) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $due = strtotime($row['return_date']);
+            $actual = strtotime($row['actual_return']);
+
+            // Only calculate if returned late (after 2-day grace)
+            if ($actual > $due + 2 * 86400) {
+                $late_days = floor(($actual - $due - 2 * 86400) / 86400);
+                $total_fine += $late_days * $fine_per_day;
+            }
+        }
+    }
+
+    return $total_fine;
+}
+
 
 ?>

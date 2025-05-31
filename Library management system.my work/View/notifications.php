@@ -27,16 +27,16 @@ while ($row = $result->fetch_assoc()) {
     $diff = (strtotime($return_date) - strtotime($today)) / (60 * 60 * 24);
 
     if ($diff == 3) {
-        $alerts['advance'][] = "📘 '{$title}' is due in 3 days.";
+        $alerts['advance'][] = "'{$title}' is due in 3 days.";
         $unread_count++;
     } elseif ($diff == 0) {
-        $alerts['overdue'][] = "⚠️ '{$title}' is due today!";
+        $alerts['overdue'][] = "'{$title}' is due today!";
         $unread_count++;
     } elseif ($diff < 0 && $diff >= -7) {
-        $alerts['overdue'][] = "❗ '{$title}' is overdue!";
+        $alerts['overdue'][] = "'{$title}' is overdue!";
         $unread_count++;
     } elseif ($diff < -7) {
-        $alerts['final'][] = "🚨 Final Warning: '{$title}' is over a week overdue!";
+        $alerts['final'][] = "Final Warning: '{$title}' is over a week overdue!";
         $unread_count++;
     }
 }
@@ -117,18 +117,19 @@ $preferences = [
     </style>
 </head>
 <body>
-    <div class="notification-page">
+      <div class="notification-page">
         <h2>
+
+
             Notifications
             <span class="bell-icon">
-                🔔
                 <?php if ($unread_count > 0): ?>
                     <span class="count"><?php echo $unread_count; ?></span>
                 <?php endif; ?>
             </span>
         </h2>
 
-        <div class="notification-bar">
+    <div class="notification-bar">
             <?php foreach ($alerts as $type => $messages): ?>
                 <?php if (!empty($messages)): ?>
                     <div class="notification-section">
@@ -141,7 +142,9 @@ $preferences = [
             <?php endforeach; ?>
         </div>
 
-        <div class="preferences">
+        
+        
+    <div class="preferences">
             <h3>Contact Preferences</h3>
             <form method="post" action="#">
                 <label>
